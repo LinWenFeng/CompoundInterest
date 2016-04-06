@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 public class Calculate {
 	Double capital,sum,rate,year,value;
 	JPanel pane;
-	boolean flag;
-	DecimalFormat df = new DecimalFormat( "0.0000 ");
+	boolean isCanCalculate;
+	DecimalFormat decimalFormat = new DecimalFormat( "0.0000 ");
 	public Calculate(JPanel jPanel) {
 		pane=jPanel;
 	}
 	public double simpleInterest(int functionselect,double t1_value,double t2_value,double t3_value) {
-		flag=assignedBranchAndJudge(functionselect, t1_value, t2_value, t3_value);
-		if(flag)
+		isCanCalculate=RssignedBranchAndJudge(functionselect, t1_value, t2_value, t3_value);
+		if(isCanCalculate)
 		{
 		switch (functionselect) {
 		case 1:
@@ -37,14 +37,14 @@ public class Calculate {
 		default:
 			break;
 			}
-		return Double.parseDouble(df.format(value));
+		return Double.parseDouble(decimalFormat.format(value));
 		}
 		else
 			return 0;
 	}
 	public double  compoundInterest(int functionselect,double t1_value,double t2_value,double t3_value) {
-		flag=assignedBranchAndJudge(functionselect, t1_value, t2_value, t3_value);
-		if(flag)
+		isCanCalculate=RssignedBranchAndJudge(functionselect, t1_value, t2_value, t3_value);
+		if(isCanCalculate)
 		{
 		switch (functionselect) {
 		case 1:
@@ -71,14 +71,14 @@ public class Calculate {
 		default:
 			break;
 		}
-		return Double.parseDouble(df.format(value));
+		return Double.parseDouble(decimalFormat.format(value));
 		}
 		else 
 			return 0;
 	}
-	public boolean assignedBranchAndJudge(int functionselect, double t1_value,
+	public boolean RssignedBranchAndJudge(int functionselect, double t1_value,
 			double t2_value, double t3_value) {
-		boolean jg = true;
+		boolean inputJudge = true;
 		switch (functionselect) {
 		case 1:
 			capital=t1_value;
@@ -87,20 +87,20 @@ public class Calculate {
 			if(capital<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "存款输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(sum<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "本息输入有误");
-				 jg=false;
+				 inputJudge=false;
 			}
 			else if(capital>=sum){
 				JOptionPane.showMessageDialog(pane, "本息或存款输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(rate<=0||rate>100){
 				JOptionPane.showMessageDialog(pane, "利率输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			break;
 		case 2:
@@ -110,16 +110,16 @@ public class Calculate {
 			if(sum<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "本息输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(year<=0||year>=100)
 			{
 				JOptionPane.showMessageDialog(pane, "年限 输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(rate<0||rate>100){
 				JOptionPane.showMessageDialog(pane, "利率输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			break;
 		case 3:
@@ -129,21 +129,21 @@ public class Calculate {
 			if(capital<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "存款输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(capital>=sum){
 				JOptionPane.showMessageDialog(pane, "本息输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(sum<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "本息输入有误");
-				 jg=false;
+				 inputJudge=false;
 			}
 			else if(year<=0||year>=100)
 			{
 				JOptionPane.showMessageDialog(pane, "年限 输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			break;
 		case 4:
@@ -154,22 +154,22 @@ public class Calculate {
 			if(capital<=0)
 			{
 				JOptionPane.showMessageDialog(pane, "存款输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(year<=0||year>=100)
 			{
 				JOptionPane.showMessageDialog(pane, "年限 输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			else if(rate<=0||rate>=100){
 				JOptionPane.showMessageDialog(pane, "利率输入有误");
-				jg=false;
+				inputJudge=false;
 			}
 			break;
 		default:
 			break;
 		}
-		return jg;
+		return inputJudge;
 	}
 	
 }
