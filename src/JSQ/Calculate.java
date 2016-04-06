@@ -32,7 +32,7 @@ public class Calculate {
 			break;
 		case 4:
 			sum=capital*(1+rate/100*year);
-			value=capital;
+			value=sum;
 			break;
 		default:
 			break;
