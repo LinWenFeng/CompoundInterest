@@ -265,7 +265,6 @@ public class CompoundInterest extends JFrame {
 		label_3.setBounds(128, 10, 113, 34);
 		Calculate_Panel.add(label_3);
 		
-		
 		User_Panel_Design();
 		
 		Invest_Panel_Design();
