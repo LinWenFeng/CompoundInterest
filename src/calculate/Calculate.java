@@ -1,4 +1,5 @@
-package JSQ;
+package calculate;
+
 
 import java.text.DecimalFormat;
 
