@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 
-public class CompoundInterest extends JFrame {
+public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -25,7 +25,7 @@ public class CompoundInterest extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CompoundInterest frame = new CompoundInterest();
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class CompoundInterest extends JFrame {
 		});
 	}
 
-	public CompoundInterest() {
+	public MainFrame() {
 		setBackground(new Color(192, 192, 192));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 418);
@@ -86,15 +86,19 @@ public class CompoundInterest extends JFrame {
 			}
 		});
 		menuBar.add(menu_3);
+		
+		JMenu menu_4 = new JMenu("记录表");
+		menuBar.add(menu_4);
+		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		/*添加计算器面板*/
 		calculatePlane = new CalculatePlane();
 		calculatePlane.setVisible(false);
 		calculatePlane.setBounds(0, 0, 450, 418);
-		contentPane.add(calculatePlane);
+		contentPane.add(calculatePlane,BorderLayout.CENTER);
 		/*添加投资面板*/
 		investPane=new InvestPane();
 		investPane.setBounds(0, 0, 450, 418);

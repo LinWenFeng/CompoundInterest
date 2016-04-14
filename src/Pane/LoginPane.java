@@ -8,11 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
+import DataBase.SingUpConnect;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class LoginPane extends JPanel {
 
@@ -41,21 +42,30 @@ public class LoginPane extends JPanel {
 		login_button = new JButton("\u767B\u5F55");
 		login_button.setFont(new Font("宋体", Font.PLAIN, 13));
 		login_button.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
 			public void mouseClicked(MouseEvent e) {
 				username=user_name_tf.getText();
-				password=password_tf.getText();
-				if(password.equals("123456")&&username.equals("LWF"))
+				password = new String(password_tf.getPassword());
+				SingUpConnect singup=new SingUpConnect();
+				singup.Sin_In();
+				if(password.equals(singup.getPassword())&&username.equals(singup.getName()))
 				{
 					JOptionPane.showMessageDialog(null, "登录成功");
 				}
-				
 			}
 		});
 		login_button.setBounds(126, 197, 93, 23);
 		add(login_button);
 		
 		sign_up_button = new JButton("\u6CE8\u518C");
+		sign_up_button.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				username=user_name_tf.getText();
+				password = new String(password_tf.getPassword());
+				SingUpConnect singup=new SingUpConnect();
+				singup.SinUp(username, password);
+				JOptionPane.showMessageDialog(null, "注册成功！");
+				}
+		});
 		sign_up_button.setFont(new Font("宋体", Font.PLAIN, 13));
 		sign_up_button.setBounds(229, 197, 93, 23);
 		add(sign_up_button);
@@ -69,7 +79,7 @@ public class LoginPane extends JPanel {
 		password_tf.setBounds(164, 136, 135, 21);
 		add(password_tf);
 		
-		JLabel label_2 = new JLabel("\u6B22\u8FCE\u4F7F\u7528");
+		JLabel label_2 = new JLabel("欢迎使用");
 		label_2.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 18));
 		label_2.setBounds(178, 30, 84, 23);
 		add(label_2);

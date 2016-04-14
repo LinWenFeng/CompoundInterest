@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import DBase.SaveRecord;
 import calculate.Calculate;
 
 import java.awt.event.ItemListener;
@@ -42,24 +43,23 @@ public class CalculatePlane extends JPanel {
 	private double tf2_value;
 	private double tf3_value;
 	private double result;
-	
+	private String itemstate;
+	private String way="复利计算";
 	KeyAdapter keyAdapter=new KeyAdapter(){  
-        @Override
 		public void keyTyped(KeyEvent e) {  
             int keyChar =e.getKeyChar();                 
             if((keyChar>=KeyEvent.VK_0 &&keyChar<=KeyEvent.VK_9)||keyChar==KeyEvent.VK_PERIOD){
             }
             else
-                e.consume(); 
+                e.consume(); /*对输入框进行限定字符的输入，只允许输入数字与小数点*/
         }
 	};
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CalculatePlane() {
 		setBackground(new Color(224, 255, 255));
 		setLayout(null);
 		
-		JLabel label = new JLabel("\u529F\u80FD\u9009\u62E9\uFF1A");
+		JLabel label = new JLabel("功能选择：");
 		label.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 14));
 		label.setBackground(new Color(0, 191, 255));
 		label.setBounds(46, 79, 79, 15);
@@ -68,7 +68,7 @@ public class CalculatePlane extends JPanel {
 		final JComboBox comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				String itemstate=comboBox.getSelectedItem().toString();
+				itemstate=comboBox.getSelectedItem().toString();
 				if(itemstate.equals("估算存期"))
 				{
 					functionselect=1;
@@ -140,7 +140,7 @@ public class CalculatePlane extends JPanel {
 		compoundRB = new JRadioButton("复利");
 		compoundRB.setBounds(215, 105, 79, 23);
 		add(compoundRB);
-		ButtonGroup group=new ButtonGroup();
+		final ButtonGroup group=new ButtonGroup();
 		group.add(compoundRB);
 		group.add(simpleRB);
 		L1 = new JLabel("存款(元)：");
@@ -179,7 +179,6 @@ public class CalculatePlane extends JPanel {
 		
 		button = new JButton("\u5E74\u9650(\u5E74)\uFF1A");
 		button.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				Calculate calculate=new Calculate(null);
 				if(isTextFieldempty()) {
@@ -187,16 +186,31 @@ public class CalculatePlane extends JPanel {
 				}
 				else {
 					getTextFieldValue();
+					/*
+					 * 传入输入框的值，进行计算
+					 * */
 					if(simpleRB.isSelected()){
-						result=calculate.simpleInterest(functionselect,tf1_value, tf2_value, tf3_value);
+						way="单利计算";
+						result=calculate.simpleInterest(functionselect,tf1_value, tf2_value,tf3_value);
 						textField4.setText(Double.toString(result));
 					}
 					else {
-						
 						result=calculate.compoundInterest(functionselect, tf1_value, tf2_value, tf3_value);
 						textField4.setText(Double.toString(result));
 					}
 				}
+				/*comboBox.getSelectedItem().toString()
+				 * way
+				 * tf1_value
+				 * tf2_value
+				 * tf3_value
+				 * result
+				 * L1.getText()
+				 * L2.getText()
+				 * L3.getText()
+				 * button.getText()
+				*/
+				new SaveRecord(comboBox.getSelectedItem().toString(),way,tf1_value,tf2_value,tf3_value,result,L1.getText(),L2.getText(),L3.getText(),button.getText());
 			}
 		});
 		button.setBounds(12, 267, 121, 23);
@@ -208,7 +222,7 @@ public class CalculatePlane extends JPanel {
 		add(textField4);
 		textField4.setColumns(10);
 		
-		JLabel label_5 = new JLabel("\u8BA1\u7B97\u5668\u529F\u80FD\u533A");
+		JLabel label_5 = new JLabel("计算器功能区");
 		label_5.setFont(new Font("Microsoft JhengHei UI", Font.PLAIN, 16));
 		label_5.setBounds(144, 25, 101, 15);
 		add(label_5);
@@ -219,8 +233,8 @@ public class CalculatePlane extends JPanel {
 		tf3_value=Double.parseDouble(textField3.getText());
 }
 	public boolean isTextFieldempty() {
-		if(textField1.getText().trim().equals("")||textField2.getText().trim().equals("")
-				||textField3.getText().trim().equals("")) 
+		if(textField1.getText().isEmpty()||textField2.getText().isEmpty()
+				||textField1.getText().isEmpty()) 
 		return true;
 		else 
 		return false;
